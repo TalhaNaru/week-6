@@ -38,3 +38,4 @@ CREATE TABLE task_tags (
     tag_id  INTEGER NOT NULL REFERENCES tags (id) ON DELETE CASCADE,
     PRIMARY KEY (task_id, tag_id)
 );
+
