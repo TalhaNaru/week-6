@@ -9,7 +9,7 @@ INSERT INTO users (name,email) VALUES
     ('Zainab Malik',    'zainab@example.com');
 
 INSERT INTO projects (name, owner_id) VALUES
-    ('Website Redesign', 1),
+    ('Website Redesign', 1), 
     ('Mobile App',       2),
     ('Marketing Launch', 1),
     ('Internal Wiki',    3);

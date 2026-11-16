@@ -65,11 +65,7 @@ GROUP BY u.id, u.name
 ORDER BY done_tasks DESC, u.name
 LIMIT 3;
 
--- Query 7: Projects that have no tasks at all.
-SELECT p.id, p.name
-FROM projects p
-LEFT JOIN tasks t ON t.project_id = p.id
-WHERE t.id IS NULL;
+
 
 -- Query 8: The average number of tags per task (tasks with no tags count as 0).
 SELECT round(avg(tag_count), 2) AS avg_tags_per_task
