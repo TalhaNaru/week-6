@@ -1,29 +1,12 @@
 -- queries.sql
 -- Task Manager queries (Week 6). Run after schema.sql and seed.sql.
 
--- Query 4: Change 'bug' to try another tag.
-SELECT t.id, t.title, t.status
-FROM tasks t
-JOIN task_tags tt ON tt.task_id = t.id
-JOIN tags tg ON tg.id = tt.tag_id
-WHERE tg.name = 'bug'
-ORDER BY t.id;
-
--- Query 5: Overdue tasks (due before today and not done) with the assignee's name.
-SELECT t.id, t.title, t.due_date, t.status, u.name AS assignee
-FROM tasks t
-LEFT JOIN users u ON u.id = t.assignee_id
-WHERE t.due_date < CURRENT_DATE
-  AND t.status <> 'done'
-ORDER BY t.due_date;
-
--- Query 7: Projects that have no tasks at all.
-SELECT p.id, p.name
-FROM projects p
-LEFT JOIN tasks t ON t.project_id = p.id
-WHERE t.id IS NULL;
-
--- Task Manager queries (Week 6). Run after schema.sql and seed.sql.
+-- Query 1: All tasks for a given project, ordered by due_date ascending, NULLs last.
+-- Change 2 to try another project id.
+SELECT id, title, status, due_date
+FROM tasks
+WHERE project_id = 2
+ORDER BY due_date ASC NULLS LAST;
 
 -- Query 2: A count of tasks per status.
 SELECT status, count(*) AS tasks
@@ -31,8 +14,8 @@ FROM tasks
 GROUP BY status
 ORDER BY status;
 
--- Query 3: Every user with their number of assigned tasks.
--- LEFT JOIN keeps users with zero tasks; count(t.id) counts only real tasks.
+-- Query 3: Every user with their number of assigned tasks, including users with zero.
+-- LEFT JOIN keeps users with no tasks; count(t.id) counts only real tasks.
 SELECT u.id, u.name, count(t.id) AS assigned_tasks
 FROM users u
 LEFT JOIN tasks t ON t.assignee_id = u.id
@@ -65,7 +48,11 @@ GROUP BY u.id, u.name
 ORDER BY done_tasks DESC, u.name
 LIMIT 3;
 
-
+-- Query 7: Projects that have no tasks at all.
+SELECT p.id, p.name
+FROM projects p
+LEFT JOIN tasks t ON t.project_id = p.id
+WHERE t.id IS NULL;
 
 -- Query 8: The average number of tags per task (tasks with no tags count as 0).
 SELECT round(avg(tag_count), 2) AS avg_tags_per_task
