@@ -39,3 +39,4 @@ CREATE TABLE task_tags (
     PRIMARY KEY (task_id, tag_id)
 );
 
+ 
